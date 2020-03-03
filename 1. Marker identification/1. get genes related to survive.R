@@ -16,7 +16,6 @@ gene.cox<-list()
 gene.meta<-list()
 datasets_scale<-list()
 datasets_nonscale<-list()
-clinical<-list()
 for(i in 1:15){
   MyGSE <- HDP.OVsets[[i]];phe <- pData(MyGSE);Mat <- exprs(MyGSE)
   if(gradeStatus[i]==0){
@@ -24,7 +23,6 @@ for(i in 1:15){
   }else if(gradeStatus[i]==1){
     phe<-phe[which(phe$histological_type=="ser" & phe$sample_type=="tumor" & phe$summarystage=="late" & phe$grade>=2),]
   }
-  clinical[[names(HDP.OVsets)[i]]]<-phe
   Mat <- Mat[,rownames(phe)];datasets_nonscale[[names(HDP.OVsets)[i]]]<-Mat
   Mat <- t(scale(t(Mat)));datasets_scale[[names(HDP.OVsets)[i]]]<-Mat
   result.cox<-coxAnalysis(Mat,phe,idx.tumorstage[i],
@@ -32,8 +30,6 @@ for(i in 1:15){
                           expNa[i])
   gene.cox[[names(HDP.OVsets)[i]]]<-result.cox[[1]]
   gene.meta[[names(HDP.OVsets)[i]]]<-result.cox[[2]]
-  gene.cox[[14]]<-result.cox[[1]]
-  gene.meta[[14]]<-result.cox[[2]]
 }
 
 i=16;MyGSE <- HDP.OVsets[[i]];phe <- pData(MyGSE);
