@@ -21,8 +21,6 @@ Train_meta_summary<-meta_summary(gene.metaTrain)
 
 source('/code/risk.R')
 source('/code/protect.R')
-Train_meta_summary<-read.csv("Train_meta_summary.csv",
-                             header = T,row.names = 1,as.is=T)
 colnames(Train_meta_summary)<-NULL
 a<-risk(Train_meta_summary)
 riskGeneInfor<-a[[1]]
