@@ -39,7 +39,7 @@ for(i in 1:15){
 i=16;MyGSE <- HDP.OVsets[[i]];phe <- pData(MyGSE);
 clinical[[names(HDP.OVsets)[i]]]<-phe;
 Mat <- exprs(MyGSE);
-Mat<-Mat[-which(apply(Mat,1,function(x){all(x==x[1])})),]#É¾µôµÄÊÇ»ùÒò
+Mat<-Mat[-which(apply(Mat,1,function(x){all(x==x[1])})),]#åˆ æŽ‰çš„æ˜¯åŸºå› 
 datasets_nonscale[[names(HDP.OVsets)[16]]]<-Mat
 Mat <- t(scale(t(Mat)))
 datasets_scale[[names(HDP.OVsets)[16]]]<-Mat
@@ -60,7 +60,6 @@ colnames(d)<-c("lnHR","HR","se(lnHR)")
 gene.cox[[names(HDP.OVsets)[16]]]<-a
 gene.meta[[names(HDP.OVsets)[16]]]<-d
 
-load("gene_cox.Rdata")
 threshold<-0.01
 actual_genenum<-matrix(sapply(gene.cox,function(x){length(which(x[,1]<threshold))}),nrow=1)
 rownames(actual_genenum)<-"genes related to survival"
@@ -69,8 +68,6 @@ diff.coxgene<-lapply(gene.cox,function(x){rownames(x)[which(x[,1]<threshold)]})
 
 source('/code/lower2symmetric.R')
 source('/codes/signatureSimility.R')
-load("diff_coxgene.Rdata")
-load("datasets_scale.Rdata")
 globalExp<-data.frame(GN=rownames(datasets_scale[[1]]),datasets_scale[[1]])
 for(i in 2:length(datasets_scale)){
   globalExp<-merge(globalExp,data.frame(GN=rownames(datasets_scale[[i]]),
@@ -107,7 +104,7 @@ source('/code/coxAnalysis.R')
 library(survival)
 load("datasets_scale.Rdata")
 load("clinical.Rdata")
-gradeStatus<-c(0,rep(1,5),0,rep(1,8))#Ç°15¸öÊý¾Ý¼¯
+gradeStatus<-c(0,rep(1,5),0,rep(1,8))#å‰15ä¸ªæ•°æ®é›†
 result<-HGClinicalStatus(clinical[1:15],gradeStatus)
 idx.tumorstage<-result[,1]
 idx.tumorgrade<-result[,2]
