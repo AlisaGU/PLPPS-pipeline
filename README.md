@@ -3,7 +3,7 @@ A comprehensive and rigid computational framework to construct a patient-level p
 .
 > This repository provides the code for the paper "A mechanistically-derived patient-level immune prognostic signature in high-grade serous ovarian cancer".
 
-![PLPPS-pipeline](https://github.com/AlisaGU/PLPPS-pipiline/blob/master/Image/PLPPS_pipeline.png)
+![PLPPS-pipeline](https://github.com/AlisaGU/PLPPS-pipeline/blob/master/Image/PLPPS_pipeline.png)
 
 ##### 1) Screening of mechanistically derived prognostic genes
 To acquire comprehensive, precise and explicable prognostic genes, univariate Cox regression analysis was performed to assess prognostic value of each gene in each dataset. Then, meta-analysis was conducted to integrate gene’s HR value from multiple dataset and evaluate their overall impact on prognosis. We assessed the heterogeneity using the Q-test and chose to conduct a random-effects model when P < 0.05, otherwise a fixed-effects model was implemented. Next, multiple testing correction (Benjamini-Hochberg, BH) was performed, and candidate survival-related markers were identified using an adjusted P value threshold of 0.01. Finally, to acquire comprehensive, precise and explicable prognostic biomarkers, functional enrichment analysis for candidate prognostic genes was performed using R package ‘clusterProfiler’. Candidate prognostic genes involved in significantly enriched biological processes were retained as biologically plausible prognostic genes.
