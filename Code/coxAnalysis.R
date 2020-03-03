@@ -5,7 +5,7 @@ coxAnalysis<-function(Mat,phe,stageStatus,gradeStatus,ageStatus,expNAstatus){
     for (j in 1:nrow(Mat)) {
       expj <- Mat[j,];
       if(length(expj[!is.na(expj)])!=0){
-        gene.j <- coxph(Surv(days_to_death,vital_status)
+        gene.j <- coxph(Surv(days_to_death,vital_status == "deceased")
                         ~ expj[!is.na(expj)]+tumorstage+grade+age_at_initial_pathologic_diagnosis, phe[!is.na(expj),])
         b<-summary(gene.j)
         a<-rbind(a,c(b$coefficients[1,5],b$conf.int[1,c(1,3,4)]))
