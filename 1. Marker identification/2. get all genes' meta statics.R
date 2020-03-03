@@ -15,7 +15,6 @@ library(clusterProfiler)
 library(org.Hs.eg.db)
 load("gene_metaTrain.Rdata")
 Train_meta_summary<-meta_summary(gene.metaTrain)
-write.csv(Train_meta_summary,"Train_meta_summary.csv")
 
 
 
