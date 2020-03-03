@@ -1,0 +1,33 @@
+getGlobalScore<-function(model_file,nonscaleGlobalExp,scaleGlobalExp){
+  model<-model.coefs1[[which(names(model.coefs1)==model_file)]]
+  if(model_file=="kernagis12"){
+    exp<-nonscaleGlobalExp#Î´scaleµÄ
+  }else{
+    exp<-scaleGlobalExp
+  }
+  inters_row<-rownames(exp)[rownames(exp)%in%names(model)]
+  inters_col<-colnames(exp)
+  if(length(inters_row)!=0){
+    if(model_file!="denkert09"){
+      exp<-matrix(exp[inters_row,],
+                  nrow=length(inters_row))
+    }else{
+      exp<-2^(matrix(exp[inters_row,],nrow=length(inters_row)))
+    }
+    rownames(exp)<-inters_row
+    colnames(exp)<-inters_col
+    model_score<-c()
+    if(model_file=="ours116"){
+      positive<-names(model[model>0])[names(model[model>0])%in%rownames(exp)]
+      negative<-names(model[model<0])[names(model[model<0])%in%rownames(exp)]
+      model_score<-t_score(exp,positive,negative)
+    }else{
+      methodModel<-model_method[[which(names(model_method)==model_file)]]
+      coef<-structure(methodModel@coefficients[rownames(exp)],
+                      .names=rownames(exp))
+      methodModel1<-initialize(methodModel,coefficients=coef)
+      model_score<-predict(methodModel1, newdata=t(exp), type="lp")@lp
+    }
+    return(model_score)
+  }
+}
